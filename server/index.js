@@ -11,5 +11,17 @@ const server = http.createServer(app)
 
 const io = socketio(server)
 
+const router = require('./router')
+
+io.on('connection', (socket) => {
+    console.log(`We have a new connection, ID: ${socket.id}`)
+
+    socket.on('disconnect', () => {
+        console.log('User had left!!')
+    })
+})
+
+app.use(router)
+
 
 server.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
